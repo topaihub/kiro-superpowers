@@ -1,8 +1,7 @@
 {
   "name": "default",
-  "description": "Default agent with Superpowers skills and OpenSpec workflow",
+  "description": "Default agent with Superpowers skills",
   "resources": [
-    "skill://.kiro/skills/**/SKILL.md",
-    "skill://.kiro/openspec-skills/**/SKILL.md"
+    "skill://.kiro/skills/**/SKILL.md"
   ]
 }

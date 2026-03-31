@@ -1,6 +1,6 @@
-# Kiro CLI + Superpowers + OpenSpec 配置同步
+# Kiro CLI + Superpowers 配置同步
 
-将 Kiro CLI 配置托管到 GitHub，集成 [obra/superpowers](https://github.com/obra/superpowers) 技能框架和 [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) 规范驱动开发框架，支持跨设备同步和一键更新。
+将 Kiro CLI 配置托管到 GitHub，集成 [obra/superpowers](https://github.com/obra/superpowers) 技能框架，支持跨设备同步和一键更新。
 
 ## 换电脑同步
 
@@ -22,48 +22,46 @@ git submodule update --init
 cd ~/.kiro && git push
 ```
 
+## 集成 OpenSpec
+
+OpenSpec 是项目级的，在每个项目中运行：
+
+```bash
+npm install -g @fission-ai/openspec@latest   # 首次安装
+cd your-project
+openspec init --tools kiro                     # 自动生成 .kiro/skills/ 和 .kiro/prompts/
+openspec update                                # 随 CLI 版本更新技能文件
+```
+
+生成的文件结构：
+
+```
+your-project/
+├── .kiro/
+│   ├── skills/                    # openspec init 自动生成
+│   │   ├── openspec-explore/
+│   │   ├── openspec-propose/
+│   │   ├── openspec-apply-change/
+│   │   └── openspec-archive-change/
+│   └── prompts/                   # openspec init 自动生成
+│       ├── opsx-explore.prompt.md
+│       ├── opsx-propose.prompt.md
+│       ├── opsx-apply.prompt.md
+│       └── opsx-archive.prompt.md
+└── openspec/
+    ├── specs/
+    └── changes/
+```
+
 ## 目录结构
 
 ```
 ~/.kiro/
 ├── agents/
-│   └── default.json              # agent 配置，加载 superpowers + openspec skills
+│   └── default.json              # agent 配置，加载 superpowers skills
 ├── superpowers/                   # submodule → github.com/obra/superpowers
 │   └── skills/
 ├── skills -> superpowers/skills   # 软链接
-├── openspec-skills/               # OpenSpec 技能（基于官方模板）
-│   ├── openspec-explore/          # 探索模式：讨论需求，不写代码
-│   │   └── SKILL.md
-│   ├── openspec-propose/          # 一步生成全套规划文档
-│   │   └── SKILL.md
-│   ├── openspec-apply-change/     # 按 tasks.md 逐项实施
-│   │   └── SKILL.md
-│   └── openspec-archive-change/   # 归档完成的变更
-│       └── SKILL.md
 ├── update-superpowers.sh          # 更新脚本
 └── README.md
 ```
-
-## OpenSpec 使用前提
-
-需要先安装 OpenSpec CLI：
-
-```bash
-npm install -g @fission-ai/openspec@latest
-```
-
-然后在项目中初始化：
-
-```bash
-cd your-project
-openspec init
-```
-
-## 在 Kiro CLI 中使用 OpenSpec
-
-技能会按需自动加载。你可以用自然语言触发：
-
-- **探索需求**："let's explore how to handle authentication"（触发 openspec-explore）
-- **创建提案**："propose a change for add-dark-mode"（触发 openspec-propose）
-- **实施任务**："implement the tasks for add-dark-mode"（触发 openspec-apply-change）
-- **归档变更**："archive the add-dark-mode change"（触发 openspec-archive-change）
