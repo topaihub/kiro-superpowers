@@ -2,26 +2,65 @@
 
 > 基于 Kiro CLI 的 `use_subagent` 机制，移植 OMO 的核心专家角色，实现多智能体并行协作。
 
-## 一、前置条件
+## 一、安装
 
-确认 Kiro CLI 已安装并可用：
+### 1.1 前置条件
+
+确认 Kiro CLI 已安装：
 
 ```bash
 kiro-cli --version
 ```
 
-确认你的 `~/.kiro/` 配置仓库已包含 OMO 相关文件：
+### 1.2 全新安装（还没有 ~/.kiro 配置仓库）
 
 ```bash
+# 克隆配置仓库（包含 Superpowers + OMO）
+git clone --recursive https://github.com/topaihub/kiro-superpowers.git ~/.kiro
+```
+
+完成后你就同时拥有了 Superpowers 技能框架和 OMO 多智能体协作能力。
+
+### 1.3 已有配置仓库（更新到最新）
+
+```bash
+cd ~/.kiro
+git pull
+git submodule update --init
+```
+
+### 1.4 验证安装
+
+```bash
+# 检查三个专家 agent 存在
 ls ~/.kiro/agents/oracle.json ~/.kiro/agents/explore.json ~/.kiro/agents/librarian.json
+
+# 检查编排技能存在
 ls ~/.kiro/omo-skills/omo-orchestrate/SKILL.md ~/.kiro/omo-skills/omo-init-deep/SKILL.md
+
+# 检查 default.json 包含 omo-skills 资源
+grep "omo-skills" ~/.kiro/agents/default.json
 ```
 
-如果没有，同步配置仓库：
+三项都通过就安装成功了。**重启 Kiro CLI**（或开始新会话）即可使用。
+
+### 1.5 启用 subagent 功能
+
+如果是首次使用 subagent，需要确认该功能已启用：
 
 ```bash
-cd ~/.kiro && git pull
+kiro-cli settings chat.enableSubagent true
 ```
+
+### 1.6 不需要安装的东西
+
+与原版 OMO 不同，Kiro 版**不需要**：
+- ❌ 不需要安装 `oh-my-opencode` / `oh-my-openagent` 包
+- ❌ 不需要安装 bun 或额外的 npm 包
+- ❌ 不需要配置 OpenCode
+- ❌ 不需要 API key（使用 Kiro CLI 自身的模型）
+
+所有配置都是纯 JSON + Markdown 文件，随 `~/.kiro/` 仓库同步。
 
 ---
 
