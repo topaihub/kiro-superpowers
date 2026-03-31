@@ -1,7 +1,14 @@
 {
   "name": "default",
-  "description": "Default agent with Superpowers skills",
+  "description": "Default agent with Superpowers skills and OMO orchestration",
   "resources": [
-    "skill://.kiro/skills/**/SKILL.md"
-  ]
+    "skill://.kiro/skills/**/SKILL.md",
+    "skill://.kiro/omo-skills/**/SKILL.md"
+  ],
+  "toolsSettings": {
+    "subagent": {
+      "availableAgents": ["oracle", "explore", "librarian"],
+      "trustedAgents": ["oracle", "explore", "librarian"]
+    }
+  }
 }
