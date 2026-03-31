@@ -1,0 +1,7 @@
+{
+  "name": "default",
+  "description": "Default agent with Superpowers skills",
+  "resources": [
+    "skill://.kiro/skills/**/SKILL.md"
+  ]
+}
